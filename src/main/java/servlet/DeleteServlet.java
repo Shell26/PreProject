@@ -1,0 +1,28 @@
+package servlet;
+
+import exeption.DBExeption;
+import model.User;
+import service.Service;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet("/delete")
+public class DeleteServlet extends HttpServlet {
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String name = req.getParameter("name");
+        String secondName = req.getParameter("second");
+        Long age = Long.parseLong(req.getParameter("age"));
+
+        User user = new User(name, secondName, age);
+
+        new Service().deleteUser(user);
+
+        resp.sendRedirect(req.getContextPath() + "/");
+    }
+}

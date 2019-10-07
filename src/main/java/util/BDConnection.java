@@ -1,6 +1,7 @@
 package util;
 
 import dao.UserDAO;
+import dao.UserDaoImplement;
 
 import java.sql.Connection;
 import java.sql.Driver;
@@ -13,8 +14,8 @@ public class BDConnection {
 
     }
 
-    public static UserDAO getUserDAO(){
-        return new UserDAO(getMysqlConnection());
+    public static UserDaoImplement getUserDAO(){
+        return new UserDaoImplement(getMysqlConnection());
     }
 
     private static Connection getMysqlConnection(){

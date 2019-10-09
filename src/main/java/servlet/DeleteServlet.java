@@ -19,7 +19,6 @@ public class DeleteServlet extends HttpServlet {
 //        String secondName = req.getParameter("second");
 //        Long age = Long.parseLong(req.getParameter("age"));
         Long id = Long.parseLong(req.getParameter("id"));
-        Long id2 = id;
 //        User user = new User(name, secondName, age);
 
         new UserService().deleteUser(id);

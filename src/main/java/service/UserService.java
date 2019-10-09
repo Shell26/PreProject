@@ -13,13 +13,13 @@ public class UserService {
 
     }
 
-    private UserDaoImplement BDConnection(){
-        return new BDConnection().getUserDAO();
+    private UserDaoImplement UserDAO(){
+        return BDConnection.getUserDAO();
     }
 
     public void addUser(User user) {
         try {
-            BDConnection().addUser(user);
+            UserDAO().addUser(user);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -27,7 +27,7 @@ public class UserService {
 
     public User getUserById(Long id) {
         try {
-            return BDConnection().getUserById(id);
+            return UserDAO().getUserById(id);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
@@ -36,7 +36,7 @@ public class UserService {
 
     public List<User> getAllUsers() {
         try {
-            return BDConnection().getAllUsers();
+            return UserDAO().getAllUsers();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
@@ -45,7 +45,7 @@ public class UserService {
 
     public void deleteUser(Long id) {
         try {
-            BDConnection().deleteUser(id);
+            UserDAO().deleteUser(id);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -53,7 +53,7 @@ public class UserService {
 
     public void updateUser(Long id, String name, String secondName, Long age) {
         try {
-            BDConnection().updateUser(id, name, secondName, age);
+            UserDAO().updateUser(id, name, secondName, age);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -61,7 +61,7 @@ public class UserService {
 
     public void createT() {
         try {
-            BDConnection().createTable();
+            UserDAO().createTable();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -69,7 +69,7 @@ public class UserService {
 
     public void cleanUp() {
         try {
-            BDConnection().dropTable();
+            UserDAO().dropTable();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

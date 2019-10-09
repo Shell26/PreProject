@@ -44,67 +44,20 @@ public class UserDaoImplement implements UserDAO {
         preparedStatement.close();
     }
 
+    // Упростил, перенеся строки в конструктор юзера (54).
     @Override
     public User getUserById(Long id) throws SQLException{
         Statement statement = connection.createStatement();
         statement.execute("select * from users where id = '" + id + "'");
         ResultSet resultSet = statement.getResultSet();
         resultSet.next();
-        User user = new User();
+        User user = new User(resultSet.getString(2), resultSet.getString(3), resultSet.getLong(4));
         user.setId(resultSet.getLong(1));
-        user.setName(resultSet.getString(2));
-        user.setSecondName(resultSet.getString(3));
-        user.setAge(resultSet.getLong(4));
         resultSet.close();
         statement.close();
         return user;
     }
-//    @Override
-//    public void addUser(User user) throws SQLException {
-//        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?)");
-//        preparedStatement.setLong(1, user.getId());
-//        preparedStatement.setString(2, user.getName());
-//        preparedStatement.setString(3, user.getSecondName());
-//        preparedStatement.setLong(4, user.getAge());
-//        preparedStatement.executeUpdate();
-//        preparedStatement.close();
-//    }
 
-//    @Override
-//    public long userId(User user) throws SQLException {
-//        PreparedStatement preparedStatement = connection.prepareStatement("select * from users where name = ? and secondName = ? and age = ?");
-//        preparedStatement.setString(1, user.getName());
-//        preparedStatement.setString(2, user.getSecondName());
-//        preparedStatement.setLong(3, user.getAge());
-//        ResultSet resultSet = preparedStatement.getResultSet();
-//        Long id = resultSet.getLong(1);
-//        resultSet.close();
-//        preparedStatement.close();
-//        return id;
-//    }
-//                        почему не работает вариант выше?
-        @Override
-        public long userSetId(User user) throws SQLException {
-            Statement statement = connection.createStatement();
-            statement.execute("select * from users where name = '" + user.getName() + "' and secondName = '" + user.getSecondName() + "' and age = '" + user.getAge() + "'");
-            ResultSet resultSet = statement.getResultSet();
-            resultSet.next();
-            Long id = resultSet.getLong(1);
-            resultSet.close();
-            statement.close();
-            return id;
-        }
-
-//    @Override
-//    public void deleteUser(User user) throws SQLException {
-//        PreparedStatement preparedStatement = connection.prepareStatement("delete from users where name = ? and secondName = ? and age = ?");
-//        preparedStatement.setString(1, user.getName());
-//        preparedStatement.setString(2, user.getSecondName());
-//        preparedStatement.setLong(3, user.getAge());
-//        preparedStatement.executeUpdate();
-//        preparedStatement.close();
-//
-//    }
         @Override
         public void deleteUser(Long id) throws SQLException {
             PreparedStatement preparedStatement = connection.prepareStatement("delete from users where id = ? ");

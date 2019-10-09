@@ -15,11 +15,7 @@ public class DeleteServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        String name = req.getParameter("name");
-//        String secondName = req.getParameter("second");
-//        Long age = Long.parseLong(req.getParameter("age"));
         Long id = Long.parseLong(req.getParameter("id"));
-//        User user = new User(name, secondName, age);
 
         new UserService().deleteUser(id);
 

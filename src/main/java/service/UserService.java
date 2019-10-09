@@ -17,7 +17,6 @@ public class UserService {
     public void addUser(User user) {
         try {
             new BDConnection().getUserDAO().addUser(user);
-            user.setId(new BDConnection().getUserDAO().userSetId(user));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

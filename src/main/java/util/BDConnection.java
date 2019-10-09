@@ -14,10 +14,6 @@ public class BDConnection {
 
     }
 
-    public static UserDaoImplement getUserDAO(){
-        return new UserDaoImplement(getMysqlConnection());
-    }
-
     public static Connection getMysqlConnection(){
         try {
             DriverManager.registerDriver((Driver) Class.forName("com.mysql.jdbc.Driver").newInstance());

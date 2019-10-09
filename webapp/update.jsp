@@ -15,9 +15,7 @@
         <label>Новая фамилия: <input type="text" name="second2" placeholder="<c:out value="${requestScope.user.secondName}"/>" /></label><br>
         <label>Новый возраст: <input type="number" name="age2" placeholder="<c:out value="${requestScope.user.age}"/>" /></label><br>
 
-        <input type="text" hidden name="name" value="${user.name}"/>
-        <input type="text" hidden name="second" value="${user.secondName}"/>
-        <input type="number" hidden name="age" value="${user.age}"/>
+        <input type="number" hidden name="id" value="${user.id}"/>
 
         <input type="submit" value="Ok" name="Ok"><br>
     </form>

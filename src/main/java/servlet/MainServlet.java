@@ -1,20 +1,14 @@
 package servlet;
 
-import exeption.DBExeption;
 import model.User;
-import service.Service;
+import service.UserService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @WebServlet("/")
 public class MainServlet extends HttpServlet {
@@ -22,9 +16,9 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        new Service().createT();
+        new UserService().createT();
 
-        req.setAttribute("users", new Service().getAllUsers());
+        req.setAttribute("users", new UserService().getAllUsers());
         req.getRequestDispatcher("/main.jsp").forward(req, resp);
     }
 
@@ -39,7 +33,7 @@ public class MainServlet extends HttpServlet {
 
         User user = new User(name, secondName, age);
 
-        new Service().addUser(user);
+        new UserService().addUser(user);
 
         doGet(req, resp);
     }

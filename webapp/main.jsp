@@ -12,15 +12,11 @@
             <li> Фамилия: <c:out value="${user.secondName}"/></li>
             <li> Возраст: <c:out value="${user.age}"/></li>
             <form method="post" action="<c:url value="/delete"/>">
-                <input type="text" hidden name="name" value="${user.name}"/>
-                <input type="text" hidden name="second" value="${user.secondName}"/>
-                <input type="number" hidden name="age" value="${user.age}"/>
+                <input type="number" hidden name="id" value="${user.id}"/>
                 <input type="submit" name="delete" value="Удалить"/>
             </form>
             <form method="get" action="<c:url value="/update"/>">
-                <input type="text" hidden name="name" value="${user.name}"/>
-                <input type="text" hidden name="second" value="${user.secondName}"/>
-                <input type="number" hidden name="age" value="${user.age}"/>
+                <input type="number" hidden name="id" value="${user.id}"/>
                 <input type="submit" name="update" value="Редктировать"/>
             </form>
         </ul>

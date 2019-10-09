@@ -9,17 +9,26 @@ import java.sql.*;
 import java.sql.SQLException;
 import java.util.List;
 
-public class Service {
-    public Service() {
+public class UserService {
+    public UserService() {
 
     }
 
     public void addUser(User user) {
         try {
             new BDConnection().getUserDAO().addUser(user);
-//            user.setId(getUserDAO().userId(user));
+            user.setId(new BDConnection().getUserDAO().userSetId(user));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public User getUserById(Long id) {
+        try {
+            return new BDConnection().getUserDAO().getUserById(id);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 
@@ -32,17 +41,17 @@ public class Service {
         }
     }
 
-    public void deleteUser(User user) {
+    public void deleteUser(Long id) {
         try {
-            new BDConnection().getUserDAO().deleteUser(user);
+            new BDConnection().getUserDAO().deleteUser(id);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void updateUser(User user, String name, String secondName, Long age) {
+    public void updateUser(Long id, String name, String secondName, Long age) {
         try {
-            new BDConnection().getUserDAO().updateUser(user, name, secondName, age);
+            new BDConnection().getUserDAO().updateUser(id, name, secondName, age);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

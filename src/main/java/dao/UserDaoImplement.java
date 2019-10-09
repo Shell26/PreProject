@@ -10,6 +10,10 @@ public class UserDaoImplement implements UserDAO {
 
     private Connection connection;
 
+    public UserDaoImplement() {
+
+    }
+
     public UserDaoImplement(Connection connection) {
         this.connection = connection;
     }

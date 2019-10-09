@@ -1,5 +1,6 @@
 package servlet;
 
+import dao.UserDAO;
 import model.User;
 import service.UserService;
 
@@ -16,7 +17,7 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        new UserService().createT();
+        new UserService().createTable();
 
         req.setAttribute("users", new UserService().getAllUsers());
         req.getRequestDispatcher("/main.jsp").forward(req, resp);

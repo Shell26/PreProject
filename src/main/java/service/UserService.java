@@ -9,17 +9,16 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserService {
+
+    private UserDAO userDAO = new UserDaoImplement(BDConnection.getMysqlConnection());
+
     public UserService() {
 
     }
 
-    private UserDaoImplement UserDAO(){
-        return BDConnection.getUserDAO();
-    }
-
     public void addUser(User user) {
         try {
-            UserDAO().addUser(user);
+            userDAO.addUser(user);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -27,7 +26,7 @@ public class UserService {
 
     public User getUserById(Long id) {
         try {
-            return UserDAO().getUserById(id);
+            return userDAO.getUserById(id);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
@@ -36,7 +35,7 @@ public class UserService {
 
     public List<User> getAllUsers() {
         try {
-            return UserDAO().getAllUsers();
+            return userDAO.getAllUsers();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
@@ -45,7 +44,7 @@ public class UserService {
 
     public void deleteUser(Long id) {
         try {
-            UserDAO().deleteUser(id);
+            userDAO.deleteUser(id);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -53,15 +52,15 @@ public class UserService {
 
     public void updateUser(Long id, String name, String secondName, Long age) {
         try {
-            UserDAO().updateUser(id, name, secondName, age);
+            userDAO.updateUser(id, name, secondName, age);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void createT() {
+    public void createTable() {
         try {
-            UserDAO().createTable();
+            userDAO.createTable();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -69,7 +68,7 @@ public class UserService {
 
     public void cleanUp() {
         try {
-            UserDAO().dropTable();
+            userDAO.dropTable();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

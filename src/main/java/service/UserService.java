@@ -1,11 +1,10 @@
 package service;
 
 import dao.UserDAO;
-import exeption.DBExeption;
+import dao.UserDaoImplement;
 import model.User;
 import util.BDConnection;
 
-import java.sql.*;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -14,9 +13,13 @@ public class UserService {
 
     }
 
+    private UserDaoImplement BDConnection(){
+        return new BDConnection().getUserDAO();
+    }
+
     public void addUser(User user) {
         try {
-            new BDConnection().getUserDAO().addUser(user);
+            BDConnection().addUser(user);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -24,7 +27,7 @@ public class UserService {
 
     public User getUserById(Long id) {
         try {
-            return new BDConnection().getUserDAO().getUserById(id);
+            return BDConnection().getUserById(id);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
@@ -33,7 +36,7 @@ public class UserService {
 
     public List<User> getAllUsers() {
         try {
-            return new BDConnection().getUserDAO().getAllUsers();
+            return BDConnection().getAllUsers();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
@@ -42,7 +45,7 @@ public class UserService {
 
     public void deleteUser(Long id) {
         try {
-            new BDConnection().getUserDAO().deleteUser(id);
+            BDConnection().deleteUser(id);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -50,25 +53,23 @@ public class UserService {
 
     public void updateUser(Long id, String name, String secondName, Long age) {
         try {
-            new BDConnection().getUserDAO().updateUser(id, name, secondName, age);
+            BDConnection().updateUser(id, name, secondName, age);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
     public void createT() {
-        UserDAO dao = new BDConnection().getUserDAO();
         try {
-            dao.createTable();
+            BDConnection().createTable();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
     public void cleanUp() {
-        UserDAO dao = new BDConnection().getUserDAO();
         try {
-            dao.dropTable();
+            BDConnection().dropTable();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

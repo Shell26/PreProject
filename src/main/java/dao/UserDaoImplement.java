@@ -44,7 +44,7 @@ public class UserDaoImplement implements UserDAO {
         preparedStatement.close();
     }
 
-    // Упростил, перенеся строки в конструктор юзера (54).
+    // Упростил, перенеся строки в конструктор юзера (строка 54).
     @Override
     public User getUserById(Long id) throws SQLException{
         Statement statement = connection.createStatement();

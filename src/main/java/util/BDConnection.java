@@ -1,8 +1,5 @@
 package util;
 
-import dao.UserDAO;
-import dao.UserDaoImplement;
-
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;

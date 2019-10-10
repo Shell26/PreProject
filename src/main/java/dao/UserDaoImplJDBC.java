@@ -1,21 +1,19 @@
 package dao;
 
 import model.User;
+import util.BDConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoImplement implements UserDAO {
+public class UserDaoImplJDBC implements UserDAO {
 
     private Connection connection;
 
-    public UserDaoImplement() {
+    public UserDaoImplJDBC() {
 
-    }
-
-    public UserDaoImplement(Connection connection) {
-        this.connection = connection;
+        this.connection = BDConnection.getMysqlConnection();
     }
 
     @Override

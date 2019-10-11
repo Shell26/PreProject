@@ -17,7 +17,7 @@
             </form>
             <form method="get" action="<c:url value="/update"/>">
                 <input type="number" hidden name="id" value="${user.id}"/>
-                <input type="submit" name="update" value="Редктировать"/>
+                <input type="submit" name="update" value="Редактировать"/>
             </form>
         </ul>
     </c:forEach>

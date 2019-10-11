@@ -1,8 +1,11 @@
 package service;
 
 import dao.UserDAO;
+import dao.UserDaoImplHibernate;
 import dao.UserDaoImplJDBC;
 import model.User;
+import org.hibernate.SessionFactory;
+import util.BDConnection;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,8 +15,10 @@ public class UserService {
     private UserDAO userDAO;
 
     public UserService() {
-        userDAO  = new UserDaoImplJDBC();
+//        userDAO  = new UserDaoImplJDBC();
+        userDAO = new UserDaoImplHibernate();
     }
+
 
     public void addUser(User user) {
         try {

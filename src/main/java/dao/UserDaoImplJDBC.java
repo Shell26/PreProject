@@ -12,7 +12,6 @@ public class UserDaoImplJDBC implements UserDAO {
     private Connection connection;
 
     public UserDaoImplJDBC() {
-
         this.connection = BDConnection.getMysqlConnection();
     }
 

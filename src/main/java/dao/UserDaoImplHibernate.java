@@ -62,7 +62,7 @@ public class UserDaoImplHibernate implements UserDAO{
         session.close();
     }
 
-    public void createTable(){}
+    public void createTable(){ }
 
     public void dropTable(){
         Transaction transaction = session.beginTransaction();

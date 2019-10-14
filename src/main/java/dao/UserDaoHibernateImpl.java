@@ -2,16 +2,15 @@ package dao;
 
 import model.User;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import util.BDConnection;
+import util.DBHelper;
 
 import java.util.List;
-import java.util.Queue;
 
-public class UserDaoImplHibernate implements UserDAO{
-    private Session session = BDConnection.getSessionFactory().openSession();
+public class UserDaoHibernateImpl implements UserDAO{
+    private DBHelper dbHelper = DBHelper.getInstance();
+    private Session session = dbHelper.getSessionFactory().openSession();
 
     public List<User> getAllUsers() {
         Transaction transaction = session.beginTransaction();

@@ -1,18 +1,17 @@
 package dao;
 
 import model.User;
-import util.BDConnection;
+import util.DBHelper;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoImplJDBC implements UserDAO {
-
+public class UserDaoJDBCImpl implements UserDAO {
     private Connection connection;
 
-    public UserDaoImplJDBC() {
-        this.connection = BDConnection.getMysqlConnection();
+    public UserDaoJDBCImpl() {
+        this.connection = DBHelper.getConnection();
     }
 
     @Override

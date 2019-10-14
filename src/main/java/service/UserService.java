@@ -1,22 +1,40 @@
 package service;
 
 import dao.UserDAO;
-import dao.UserDaoImplHibernate;
-import dao.UserDaoImplJDBC;
+import dao.UserDaoHibernateImpl;
+import dao.UserDaoJDBCImpl;
 import model.User;
-import org.hibernate.SessionFactory;
-import util.BDConnection;
+import dao.UserDaoFactory;
 
+import java.io.*;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Scanner;
 
 public class UserService {
+    private static UserService instance;
+    private static UserDAO userDAO;
 
-    private UserDAO userDAO;
+    private UserService() throws FileNotFoundException {
+//        userDAO  = new UserDaoJDBCImpl();
+//        userDAO = new UserDaoHibernateImpl();
+//        FileReader fr = new FileReader("C:/Users/socia/IdeaProjects/test1/src/property.txt");
+//        Scanner scanner = new Scanner(fr);
+//        String path = scanner.nextLine();
+//        userDAO = UserDaoFactory.getUserDao(path);
+    }
 
-    public UserService() {
-//        userDAO  = new UserDaoImplJDBC();
-        userDAO = new UserDaoImplHibernate();
+
+    public static UserService getInstance() throws IOException {
+        if (instance == null){
+            instance = new UserService();
+
+        }
+        FileReader fr = new FileReader("C:/Users/socia/IdeaProjects/test1/src/property.txt");
+        Scanner scanner = new Scanner(fr);
+        String path = scanner.nextLine();
+        userDAO = UserDaoFactory.getUserDao(path);
+        return instance;
     }
 
 

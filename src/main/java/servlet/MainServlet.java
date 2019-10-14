@@ -17,9 +17,9 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        new UserService().createTable();
+        UserService.getInstance().createTable();
 
-        req.setAttribute("users", new UserService().getAllUsers());
+        req.setAttribute("users", UserService.getInstance().getAllUsers());
         req.getRequestDispatcher("/main.jsp").forward(req, resp);
     }
 
@@ -34,7 +34,7 @@ public class MainServlet extends HttpServlet {
 
         User user = new User(name, secondName, age);
 
-        new UserService().addUser(user);
+        UserService.getInstance().addUser(user);
 
         doGet(req, resp);
     }

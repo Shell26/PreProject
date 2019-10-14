@@ -16,7 +16,7 @@ public class UpdateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long id = Long.parseLong(req.getParameter("id"));
-        User user = new UserService().getUserById(id);
+        User user = UserService.getInstance().getUserById(id);
         req.setAttribute("user", user);
 
         req.getRequestDispatcher("update.jsp").forward(req, resp);
@@ -29,7 +29,7 @@ public class UpdateServlet extends HttpServlet {
         String newSecondName = req.getParameter("second2");
         Long newAge = Long.parseLong(req.getParameter("age2"));
 
-        new UserService().updateUser(id, newName, newSecondName, newAge);
+        UserService.getInstance().updateUser(id, newName, newSecondName, newAge);
 
         resp.sendRedirect(req.getContextPath() + "/");
     }

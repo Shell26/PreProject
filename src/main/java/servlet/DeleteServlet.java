@@ -17,7 +17,8 @@ public class DeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long id = Long.parseLong(req.getParameter("id"));
 
-        new UserService().deleteUser(id);
+//        new UserService().deleteUser(id);
+        UserService.getInstance().deleteUser(id);
 
         resp.sendRedirect(req.getContextPath() + "/");
     }

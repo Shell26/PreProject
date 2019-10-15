@@ -10,11 +10,7 @@ public class PropertyReader {
     public String getPath(){
         Properties properties = new Properties();
         InputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream("C:/Users/socia/IdeaProjects/test1/src/main/resources/config.properties");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        inputStream = getClass().getClassLoader().getResourceAsStream("config.properties");
         try {
             properties.load(inputStream);
         } catch (IOException e) {

@@ -3,6 +3,7 @@ package service;
 import factory.DaoFactory;
 import dao.UserDAO;
 import model.User;
+import util.PropertyReader;
 
 import java.io.*;
 import java.sql.SQLException;
@@ -29,16 +30,16 @@ public class UserService {
             instance = new UserService();
 
         }
-        Properties properties = new Properties();
-        InputStream inputStream = null;
-        inputStream = new FileInputStream("C:/Users/socia/IdeaProjects/test1/src/main/resources/config.properties");
-        properties.load(inputStream);
-        String path = properties.getProperty("DB_TYPE");
+//        Properties properties = new Properties();
+//        InputStream inputStream = null;
+//        inputStream = new FileInputStream("C:/Users/socia/IdeaProjects/test1/src/main/resources/config.properties");
+//        properties.load(inputStream);
+//        String path = properties.getProperty("DB_TYPE");
 
 //        FileReader fr = new FileReader("C:/Users/socia/IdeaProjects/test1/src/property.txt");
 //        Scanner scanner = new Scanner(fr);
 //        String path = scanner.nextLine();
-        userDAO = DaoFactory.getUserDao(path).getDao();
+        userDAO = DaoFactory.getUserDao(new PropertyReader().getPath()).getDao();
         return instance;
     }
 

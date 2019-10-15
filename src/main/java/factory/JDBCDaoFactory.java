@@ -4,7 +4,8 @@ package factory;
 import dao.UserDAO;
 import dao.UserDaoJDBCImpl;
 
-public class JDBCDaoFactory extends DaoFactory {
+
+public class JDBCDaoFactory implements DaoFactory{
 
     @Override
     public UserDAO getDao() {

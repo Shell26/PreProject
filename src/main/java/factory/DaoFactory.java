@@ -2,9 +2,10 @@ package factory;
 
 import dao.UserDAO;
 
-public abstract class DaoFactory {
 
-    public abstract UserDAO getDao();
+public interface DaoFactory {
+
+    UserDAO getDao();
 
     public static DaoFactory getUserDao(String type) {
         if (type.equalsIgnoreCase("JDBC")) {

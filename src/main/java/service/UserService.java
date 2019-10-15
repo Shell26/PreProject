@@ -1,18 +1,14 @@
 package service;
 
+import factory.DaoFactory;
 import dao.UserDAO;
-import dao.UserDaoHibernateImpl;
-import dao.UserDaoJDBCImpl;
 import model.User;
-import dao.UserDaoFactory;
 
 import java.io.*;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
-import java.util.Scanner;
 
-import static dao.UserDaoFactory.*;
 
 public class UserService {
     private static UserService instance;
@@ -42,7 +38,7 @@ public class UserService {
 //        FileReader fr = new FileReader("C:/Users/socia/IdeaProjects/test1/src/property.txt");
 //        Scanner scanner = new Scanner(fr);
 //        String path = scanner.nextLine();
-        userDAO = UserDaoFactory.getUserDao(path);
+        userDAO = DaoFactory.getUserDao(path).getDao();
         return instance;
     }
 

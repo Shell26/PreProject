@@ -12,23 +12,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "age")
+    private Long age;
+
     @Column(name = "name")
     private String name;
 
     @Column(name = "secondName")
     private String secondName;
 
-    @Column(name = "age")
-    private Long age;
-
     public User(){
 
     }
 
-    public User(String name, String secondName, Long age){
+    public User(Long age, String name, String secondName){
+        this.age = age;
         this.name = name;
         this.secondName = secondName;
-        this.age = age;
     }
 
     @Override
@@ -36,14 +36,15 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User that = (User) o;
-        return Objects.equals(getName(), that.getName()) &&
-                Objects.equals(getSecondName(), that.getSecondName()) &&
-                Objects.equals(getAge(), that.getAge());
+        return Objects.equals(getAge(), that.getAge()) &&
+                Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getSecondName(), that.getSecondName());
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getSecondName(), getAge());
+        return Objects.hash(getAge(), getName(), getSecondName());
     }
 
     public void setId(Long id) {

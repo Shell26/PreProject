@@ -78,9 +78,9 @@ public class UserService {
         }
     }
 
-    public void updateUser(Long id, String name, String secondName, Long age) {
+    public void updateUser(Long id, Long age, String name, String secondName) {
         try {
-            userDAO.updateUser(id, name, secondName, age);
+            userDAO.updateUser(id, age, name, secondName);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

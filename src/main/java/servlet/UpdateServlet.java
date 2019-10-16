@@ -29,7 +29,7 @@ public class UpdateServlet extends HttpServlet {
         String newSecondName = req.getParameter("second2");
         Long newAge = Long.parseLong(req.getParameter("age2"));
 
-        UserService.getInstance().updateUser(id, newName, newSecondName, newAge);
+        UserService.getInstance().updateUser(id, newAge, newName, newSecondName);
 
         resp.sendRedirect(req.getContextPath() + "/");
     }

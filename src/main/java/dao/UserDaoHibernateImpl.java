@@ -49,7 +49,7 @@ public class UserDaoHibernateImpl implements UserDAO{
     }
 
 
-    public void updateUser(Long id, String name, String secondName, Long age) {
+    public void updateUser(Long id, Long age, String name, String secondName) {
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("update User u set u.name = :newName, u.secondName = :newSecond, u.age = :newAge where u.id = :i");
         query.setParameter("newName", name);

@@ -24,9 +24,9 @@ public class UserDaoJDBCImpl implements UserDAO {
         while (resultSet.next()) {
             User user = new User();
             user.setId(resultSet.getLong("id"));
+            user.setAge(resultSet.getLong("age"));
             user.setName(resultSet.getString("name"));
             user.setSecondName(resultSet.getString("secondName"));
-            user.setAge(resultSet.getLong("age"));
             list.add(user);
         }
         resultSet.close();
@@ -37,9 +37,9 @@ public class UserDaoJDBCImpl implements UserDAO {
     @Override
     public void addUser(User user) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users VALUES (0, ?, ?, ?)");
-        preparedStatement.setString(1, user.getName());
-        preparedStatement.setString(2, user.getSecondName());
-        preparedStatement.setLong(3, user.getAge());
+        preparedStatement.setString(2, user.getName());
+        preparedStatement.setString(3, user.getSecondName());
+        preparedStatement.setLong(1, user.getAge());
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
@@ -51,7 +51,7 @@ public class UserDaoJDBCImpl implements UserDAO {
         statement.execute("select * from users where id = '" + id + "'");
         ResultSet resultSet = statement.getResultSet();
         resultSet.next();
-        User user = new User(resultSet.getString(2), resultSet.getString(3), resultSet.getLong(4));
+        User user = new User(resultSet.getLong(2), resultSet.getString(3), resultSet.getString(4));
         user.setId(resultSet.getLong(1));
         resultSet.close();
         statement.close();
@@ -67,11 +67,11 @@ public class UserDaoJDBCImpl implements UserDAO {
         }
 
     @Override
-    public void updateUser(Long id, String name, String secondName, Long age) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("update users set name = ?, secondName = ?, age = ? where id = ? ");
-        preparedStatement.setString(1, name);
-        preparedStatement.setString(2, secondName);
-        preparedStatement.setLong(3, age);
+    public void updateUser(Long id, Long age, String name, String secondName) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("update users set age = ?, name = ?, secondName = ? where id = ? ");
+        preparedStatement.setString(2, name);
+        preparedStatement.setString(3, secondName);
+        preparedStatement.setLong(1, age);
         preparedStatement.setLong(4, id);
         preparedStatement.executeUpdate();
         preparedStatement.close();
@@ -80,7 +80,7 @@ public class UserDaoJDBCImpl implements UserDAO {
     @Override
     public void createTable() throws SQLException {
         Statement statement = connection.createStatement();
-        statement.execute("create table if not exists users (id bigint not null auto_increment, name varchar(256), secondName varchar(256), age bigint, primary key (id))");
+        statement.execute("create table if not exists users (id bigint not null auto_increment, age bigint, name varchar(256), secondName varchar(256), primary key (id))");
         statement.close();
     }
 

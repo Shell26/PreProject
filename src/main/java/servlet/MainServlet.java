@@ -32,7 +32,7 @@ public class MainServlet extends HttpServlet {
         String secondName = req.getParameter("second");
         Long age = Long.parseLong(req.getParameter("age"));
 
-        User user = new User(name, secondName, age);
+        User user = new User(age, name, secondName);
 
         UserService.getInstance().addUser(user);
 

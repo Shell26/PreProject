@@ -26,6 +26,7 @@ public class UserDaoJDBCImpl implements UserDAO {
             user.setId(resultSet.getLong("id"));
             user.setAge(resultSet.getLong("age"));
             user.setName(resultSet.getString("name"));
+            user.setRole(resultSet.getString("role"));
             user.setSecondName(resultSet.getString("secondName"));
             list.add(user);
         }
@@ -36,22 +37,23 @@ public class UserDaoJDBCImpl implements UserDAO {
 
     @Override
     public void addUser(User user) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users VALUES (0, ?, ?, ?)");
-        preparedStatement.setString(2, user.getName());
-        preparedStatement.setString(3, user.getSecondName());
+        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users VALUES (0, ?, ?, ?, ?)");
         preparedStatement.setLong(1, user.getAge());
+        preparedStatement.setString(2, user.getName());
+        preparedStatement.setString(4, user.getSecondName());
+        preparedStatement.setString(3, user.getRole());
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
 
-    // Упростил, перенеся строки в конструктор юзера (строка 54).
+
     @Override
     public User getUserById(Long id) throws SQLException{
         Statement statement = connection.createStatement();
         statement.execute("select * from users where id = '" + id + "'");
         ResultSet resultSet = statement.getResultSet();
         resultSet.next();
-        User user = new User(resultSet.getLong(2), resultSet.getString(3), resultSet.getString(4));
+        User user = new User(resultSet.getLong(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5));
         user.setId(resultSet.getLong(1));
         resultSet.close();
         statement.close();
@@ -80,8 +82,20 @@ public class UserDaoJDBCImpl implements UserDAO {
     @Override
     public void createTable() throws SQLException {
         Statement statement = connection.createStatement();
-        statement.execute("create table if not exists users (id bigint not null auto_increment, age bigint, name varchar(256), secondName varchar(256), primary key (id))");
+        statement.execute("create table if not exists users (id bigint not null auto_increment, age bigint, name varchar(256), secondName varchar(256) unique, primary key (id))");
         statement.close();
+    }
+
+    @Override
+    public boolean isAdmin(String name, String secondName) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("select * form users where name = ? and secondName = ?");
+        preparedStatement.setString(1, name);
+        preparedStatement.setString(2, secondName);
+        ResultSet resultSet = preparedStatement.getResultSet();
+        resultSet.next();
+        if (resultSet.getString(4) == "user"){
+            return false;
+        }else {return true;}
     }
 
     @Override

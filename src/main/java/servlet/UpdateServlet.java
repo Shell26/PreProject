@@ -19,7 +19,7 @@ public class UpdateServlet extends HttpServlet {
         User user = UserService.getInstance().getUserById(id);
         req.setAttribute("user", user);
 
-        req.getRequestDispatcher("update.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/view/update.jsp").forward(req, resp);
     }
 
     @Override

@@ -6,6 +6,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import util.DBHelper;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDAO{
@@ -59,6 +60,21 @@ public class UserDaoHibernateImpl implements UserDAO{
         int result = query.executeUpdate();
         transaction.commit();
         session.close();
+    }
+
+    @Override
+    public boolean isAdmin(String name, String secondName) {
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("FROM User where name = :nm, secondName =: sn");
+        query.setParameter("nm", name);
+        query.setParameter("sn", secondName);
+        List list = query.list();
+        User user = (User) list.get(0);
+        transaction.commit();
+        session.close();
+        if (user.getRole() == "user"){
+            return false;
+        }else{return true;}
     }
 
     public void createTable(){ }

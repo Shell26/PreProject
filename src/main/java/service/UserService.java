@@ -86,6 +86,15 @@ public class UserService {
         }
     }
 
+    public boolean isAdmin(String name, String secondName){
+        try{
+            return userDAO.isAdmin(name, secondName);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
     public void createTable() {
         try {
             userDAO.createTable();

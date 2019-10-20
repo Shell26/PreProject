@@ -20,7 +20,7 @@ public class MainServlet extends HttpServlet {
         UserService.getInstance().createTable();
 
         req.setAttribute("users", UserService.getInstance().getAllUsers());
-        req.getRequestDispatcher("/main.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/view/main.jsp").forward(req, resp);
     }
 
     @Override
@@ -32,9 +32,11 @@ public class MainServlet extends HttpServlet {
         String secondName = req.getParameter("second");
         Long age = Long.parseLong(req.getParameter("age"));
 
-        User user = new User(age, name, secondName);
+        User user = new User(age, name, "user", secondName);
 
         UserService.getInstance().addUser(user);
+
+//        System.out.println(UserService.getInstance().isAdmin(name, secondName));
 
         doGet(req, resp);
     }

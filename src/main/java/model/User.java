@@ -18,16 +18,20 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "secondName")
+    @Column(name = "role")
+    private String role;
+
+    @Column(name = "secondName", unique = true)
     private String secondName;
 
     public User(){
 
     }
 
-    public User(Long age, String name, String secondName){
+    public User(Long age, String name, String role, String secondName){
         this.age = age;
         this.name = name;
+        this.role = role;
         this.secondName = secondName;
     }
 
@@ -38,8 +42,8 @@ public class User {
         User that = (User) o;
         return Objects.equals(getAge(), that.getAge()) &&
                 Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getRole(), that.getRole()) &&
                 Objects.equals(getSecondName(), that.getSecondName());
-
     }
 
     @Override
@@ -53,6 +57,10 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public void setSecondName(String secondName) {
@@ -71,6 +79,10 @@ public class User {
         return name;
     }
 
+    public String getRole() {
+        return role;
+    }
+
     public String getSecondName() {
         return secondName;
     }
@@ -78,4 +90,5 @@ public class User {
     public Long getAge() {
         return age;
     }
+
 }

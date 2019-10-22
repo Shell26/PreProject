@@ -39,6 +39,16 @@ public class UserDaoHibernateImpl implements UserDAO{
         return user;
     }
 
+    public boolean userIsExist(String name, String password) throws SQLException {
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("from User where name =:n and password =:p");
+        query.setParameter("n", name);
+        query.setParameter("p", password);
+        List list = query.list();
+        transaction.commit();
+        session.close();
+        return list.isEmpty();
+    }
 
     public void deleteUser(Long id) {
         Transaction transaction = session.beginTransaction();
@@ -50,11 +60,11 @@ public class UserDaoHibernateImpl implements UserDAO{
     }
 
 
-    public void updateUser(Long id, Long age, String name, String secondName) {
+    public void updateUser(Long id, Long age, String name, String password) {
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("update User u set u.name = :newName, u.secondName = :newSecond, u.age = :newAge where u.id = :i");
+        Query query = session.createQuery("update User u set u.name = :newName, u.age = :newAge, u.password = :newSecond where u.id = :i");
         query.setParameter("newName", name);
-        query.setParameter("newSecond", secondName);
+        query.setParameter("newSecond", password);
         query.setParameter("newAge", age);
         query.setParameter("i", id);
         int result = query.executeUpdate();
@@ -62,12 +72,11 @@ public class UserDaoHibernateImpl implements UserDAO{
         session.close();
     }
 
-    @Override
-    public boolean isAdmin(String name, String secondName) {
+    public boolean isAdmin(String name, String password) {
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("FROM User where name = :nm, secondName =: sn");
+        Query query = session.createQuery("FROM User where name = :nm, password =: sn");
         query.setParameter("nm", name);
-        query.setParameter("sn", secondName);
+        query.setParameter("sn", password);
         List list = query.list();
         User user = (User) list.get(0);
         transaction.commit();

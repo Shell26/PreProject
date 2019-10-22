@@ -26,10 +26,10 @@ public class UpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long id = Long.parseLong(req.getParameter("id"));
         String newName = req.getParameter("name2");
-        String newSecondName = req.getParameter("second2");
+        String newpassword = req.getParameter("password2");
         Long newAge = Long.parseLong(req.getParameter("age2"));
 
-        UserService.getInstance().updateUser(id, newAge, newName, newSecondName);
+        UserService.getInstance().updateUser(id, newAge, newName, newpassword);
 
         resp.sendRedirect(req.getContextPath() + "/");
     }

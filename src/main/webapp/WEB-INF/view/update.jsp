@@ -6,13 +6,13 @@
 </head>
 <body>
     Текущее Имя: <c:out value="${requestScope.user.name}"/><br/>
-    Текущая Фамилия: <c:out value="${requestScope.user.secondName}"/><br/>
+    Текущий Пароль: <c:out value="${requestScope.user.password}"/><br/>
     Текущий Возраст: <c:out value="${requestScope.user.age}"/><br/>
     <br/>
 <p>Обязательно нужно редактировать все поля</p><br/>
     <form method="post" action="<c:url value='/update'/>">
         <label>Новое имя: <input type="text" name="name2" placeholder="<c:out value="${requestScope.user.name}"/>" /></label><br>
-        <label>Новая фамилия: <input type="text" name="second2" placeholder="<c:out value="${requestScope.user.secondName}"/>" /></label><br>
+        <label>Новый пароль: <input type="password" name="password2" placeholder="<c:out value="${requestScope.user.password}"/>" /></label><br>
         <label>Новый возраст: <input type="number" name="age2" placeholder="<c:out value="${requestScope.user.age}"/>" /></label><br>
 
         <input type="number" hidden name="id" value="${user.id}"/>

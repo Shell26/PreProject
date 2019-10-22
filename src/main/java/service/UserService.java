@@ -95,6 +95,15 @@ public class UserService {
         }
     }
 
+    public boolean userIsExist(String name, String password){
+        try{
+            return userDAO.userIsExist(name, password);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
     public void createTable() {
         try {
             userDAO.createTable();

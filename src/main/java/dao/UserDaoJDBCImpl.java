@@ -40,8 +40,8 @@ public class UserDaoJDBCImpl implements UserDAO {
         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users VALUES (0, ?, ?, ?, ?)");
         preparedStatement.setLong(1, user.getAge());
         preparedStatement.setString(2, user.getName());
-        preparedStatement.setString(4, user.getPassword());
-        preparedStatement.setString(3, user.getRole());
+        preparedStatement.setString(3, user.getPassword());
+        preparedStatement.setString(4, user.getRole());
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }

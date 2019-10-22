@@ -47,7 +47,11 @@ public class UserDaoHibernateImpl implements UserDAO{
         List list = query.list();
         transaction.commit();
         session.close();
-        return list.isEmpty();
+        if(list.isEmpty()){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     public void deleteUser(Long id) {
@@ -74,14 +78,14 @@ public class UserDaoHibernateImpl implements UserDAO{
 
     public boolean isAdmin(String name, String password) {
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("FROM User where name = :nm, password =: sn");
+        Query query = session.createQuery("FROM User where name = :nm and password =: sn");
         query.setParameter("nm", name);
         query.setParameter("sn", password);
         List list = query.list();
         User user = (User) list.get(0);
         transaction.commit();
         session.close();
-        if (user.getRole() == "user"){
+        if (user.getRole().equals("user")){
             return false;
         }else{return true;}
     }

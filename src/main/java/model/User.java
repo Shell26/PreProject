@@ -18,21 +18,21 @@ public class User {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "role")
     private String role;
-
-    @Column(name = "secondName", unique = true)
-    private String secondName;
 
     public User(){
 
     }
 
-    public User(Long age, String name, String role, String secondName){
+    public User(Long age, String name, String password, String role){
         this.age = age;
         this.name = name;
+        this.password = password;
         this.role = role;
-        this.secondName = secondName;
     }
 
     @Override
@@ -42,13 +42,13 @@ public class User {
         User that = (User) o;
         return Objects.equals(getAge(), that.getAge()) &&
                 Objects.equals(getName(), that.getName()) &&
-                Objects.equals(getRole(), that.getRole()) &&
-                Objects.equals(getSecondName(), that.getSecondName());
+                Objects.equals(getPassword(), that.getPassword()) &&
+                Objects.equals(getRole(), that.getRole());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAge(), getName(), getSecondName());
+        return Objects.hash(getAge(), getName(), getPassword());
     }
 
     public void setId(Long id) {
@@ -63,8 +63,8 @@ public class User {
         this.role = role;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setAge(Long age) {
@@ -83,8 +83,8 @@ public class User {
         return role;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getPassword() {
+        return password;
     }
 
     public Long getAge() {

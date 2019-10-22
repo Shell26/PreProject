@@ -9,8 +9,9 @@
     <c:forEach var="user" items="${requestScope.users}">
         <ul>
             <li> Имя: <c:out value="${user.name}"/></li>
-            <li> Фамилия: <c:out value="${user.secondName}"/></li>
+            <li> Пароль: <c:out value="${user.password}"/></li>
             <li> Возраст: <c:out value="${user.age}"/></li>
+            <li> Права: <c:out value="${user.role}"/></li>
             <form method="post" action="<c:url value="/delete"/>">
                 <input type="number" hidden name="id" value="${user.id}"/>
                 <input type="submit" name="delete" value="Удалить"/>
@@ -25,7 +26,7 @@
     <h1>Add User</h1>
     <form method="post">
         Имя <input type="text" name="name"><br/>
-        Фамилия <input type="text" name="second"><br/>
+        Пароль <input type="password" name="password"><br/>
         Возраст <input type="number" name="age"><br/>
         <button type="submit">Add</button>
     </form>

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/")
+@WebServlet("/main")
 public class MainServlet extends HttpServlet {
 
     @Override
@@ -21,6 +21,7 @@ public class MainServlet extends HttpServlet {
 
         req.setAttribute("users", UserService.getInstance().getAllUsers());
         req.getRequestDispatcher("/WEB-INF/view/main.jsp").forward(req, resp);
+//        resp.sendRedirect("/WEB-INF/view/main.jsp");
     }
 
     @Override
@@ -29,10 +30,10 @@ public class MainServlet extends HttpServlet {
         req.setCharacterEncoding("UTF8");
 
         String name = req.getParameter("name");
-        String secondName = req.getParameter("second");
+        String password = req.getParameter("password");
         Long age = Long.parseLong(req.getParameter("age"));
 
-        User user = new User(age, name, "user", secondName);
+        User user = new User(age, name, password, "user");
 
         UserService.getInstance().addUser(user);
 

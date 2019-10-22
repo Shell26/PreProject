@@ -30,6 +30,7 @@
         Возраст <input type="number" name="age"><br/>
         <button type="submit">Add</button>
     </form>
-
+<br>
+    <a href="<c:url value="/logout"/>">Logout</a>
 </body>
 </html>

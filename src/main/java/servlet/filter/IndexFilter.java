@@ -33,34 +33,24 @@ public class IndexFilter implements Filter {
 
         final HttpSession session = req.getSession();
 
-        if(login==null || password==null){
-//            res.sendRedirect("/index.jsp");
+        if (login == null || password == null) {          //первое посещение
             filterChain.doFilter(request, response);
-        }else if (nonNull(session.getAttribute("login")) &&          // уже заходил
+        } else if (UserService.getInstance().userIsExist(login, password)) {     // не заходил, существует
+            req.getSession().setAttribute("password", password);
+            req.getSession().setAttribute("login", login);
+
+            if (UserService.getInstance().isAdmin(login, password)) {
+                res.sendRedirect("main");
+            } else {
+                res.sendRedirect("user");
+            }
+        } else if (nonNull(session.getAttribute("login")) &&          // уже заходил
                 nonNull(session.getAttribute("password"))) {
-
-                if (UserService.getInstance().isAdmin(login, password)) {
-//                req.getRequestDispatcher("/WEB-INF/view/main.jsp").forward(req, res);
-//                    res.sendRedirect("/WEB-INF/view/main.jsp");
-                    res.sendRedirect("main");
-                } else {
-//                req.getRequestDispatcher("/WEB-INF/view/user.jsp").forward(req, res);
-//                    res.sendRedirect("/WEB-INF/view/user.jsp");
-                    res.sendRedirect("user");
-                }
-            }else if(UserService.getInstance().userIsExist(login, password)){     // не заходил, существует
-                req.getSession().setAttribute("password", password);
-                req.getSession().setAttribute("login", login);
-
-                if (UserService.getInstance().isAdmin(login, password)) {
-                    res.sendRedirect("main");
-//                    UserService.getInstance().createTable();
-//                    req.setAttribute("users", UserService.getInstance().getAllUsers());
-//                    req.getRequestDispatcher("/WEB-INF/view/main.jsp").forward(req, res);
-                } else {
-//                    res.sendRedirect("/WEB-INF/view/main.jsp");
-                    req.getRequestDispatcher("/WEB-INF/view/user.jsp").forward(req, res);
-                }
+            if (UserService.getInstance().isAdmin(login, password)) {
+                res.sendRedirect("main");
+            } else {
+                res.sendRedirect("user");
+            }
         }
     }
 

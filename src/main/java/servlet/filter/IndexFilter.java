@@ -28,8 +28,8 @@ public class IndexFilter implements Filter {
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
 
-        final String login = req.getParameter("login");
-        final String password = req.getParameter("password");
+        final String login = req.getParameter("authLogin");
+        final String password = req.getParameter("authPass");
 
         final HttpSession session = req.getSession();
 
@@ -38,14 +38,6 @@ public class IndexFilter implements Filter {
         } else if (UserService.getInstance().userIsExist(login, password)) {     // не заходил, существует
             req.getSession().setAttribute("password", password);
             req.getSession().setAttribute("login", login);
-
-            if (UserService.getInstance().isAdmin(login, password)) {
-                res.sendRedirect("main");
-            } else {
-                res.sendRedirect("user");
-            }
-        } else if (nonNull(session.getAttribute("login")) &&          // уже заходил
-                nonNull(session.getAttribute("password"))) {
             if (UserService.getInstance().isAdmin(login, password)) {
                 res.sendRedirect("main");
             } else {

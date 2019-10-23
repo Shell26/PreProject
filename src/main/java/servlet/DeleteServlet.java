@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/delete")
@@ -15,11 +16,16 @@ public class DeleteServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Long id = Long.parseLong(req.getParameter("id"));
+        final HttpSession session = req.getSession();
+        final String login = (String) session.getAttribute("login");
+        final String password = (String) session.getAttribute("password");
 
-//        new UserService().deleteUser(id);
-        UserService.getInstance().deleteUser(id);
-
-        resp.sendRedirect(req.getContextPath() + "/");
+        if (UserService.getInstance().isAdmin(login, password)) {
+            Long id = Long.parseLong(req.getParameter("id"));
+            UserService.getInstance().deleteUser(id);
+            resp.sendRedirect(req.getContextPath() + "/");
+        }else{
+            req.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(req, resp);
+        }
     }
 }

@@ -13,8 +13,8 @@ import java.io.IOException;
 
 import static java.util.Objects.nonNull;
 
-//@WebFilter("/")
-@WebFilter(servletNames = "IndexServlet")
+@WebFilter("/admin")
+//@WebFilter(servletNames = "IndexServlet")
 public class IndexFilter implements Filter {
 
     @Override
@@ -23,28 +23,51 @@ public class IndexFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        System.out.printf("Filter working");
-
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
 
-        final String login = req.getParameter("authLogin");
-        final String password = req.getParameter("authPass");
+        final HttpSession session = req.getSession(false);
 
-        final HttpSession session = req.getSession();
-
-        if (login == null || password == null) {          //первое посещение
-            filterChain.doFilter(request, response);
-        } else if (UserService.getInstance().userIsExist(login, password)) {     // не заходил, существует
-            req.getSession().setAttribute("password", password);
-            req.getSession().setAttribute("login", login);
-            if (UserService.getInstance().isAdmin(login, password)) {
-                res.sendRedirect("main");
-            } else {
-                res.sendRedirect("user");
-            }
+        if(session.getAttribute("login") == null ||
+                session.getAttribute("password") == null){
+            final String login = req.getParameter("authLogin");       //читаю из формы
+            final String password = req.getParameter("authPass");
+            session.setAttribute("password", password);
+            session.setAttribute("login", login);
         }
+
+        final String login = (String) session.getAttribute("login");
+        final String password = (String) session.getAttribute("password");
+
+        if (UserService.getInstance().userIsExist(login, password)){
+            if (UserService.getInstance().isAdmin(login, password)) {
+                res.sendRedirect(req.getContextPath() + "/admin/main");
+            }else{
+                res.sendRedirect(req.getContextPath() + "/user");
+            }
+        }else{
+            res.sendRedirect(req.getContextPath() + "/");
+        }
+
+
+//        if (login == null || password == null) {          //первое посещение
+//            filterChain.doFilter(request, response);
+//        } else if (UserService.getInstance().userIsExist(login, password)) {     // не заходил, существует
+//            req.getSession().setAttribute("password", password);
+//            req.getSession().setAttribute("login", login);
+//            if (UserService.getInstance().isAdmin(login, password)) {
+                // бегает по кругу фильтр-сервлет
+//                res.sendRedirect(req.getContextPath() + "/admin/main");
+//                request.getServletContext().getRequestDispatcher("/admin/main").forward(request, response);
+
+//                request.getRequestDispatcher("/admin/main").forward(request, response);
+//            } else {
+//                res.sendRedirect(req.getContextPath() + "/user");
+//                request.getServletContext().getRequestDispatcher("/user").forward(request, response);
+//            }
+//        }
     }
+
 
     @Override
     public void destroy() {

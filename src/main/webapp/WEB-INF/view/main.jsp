@@ -12,11 +12,11 @@
             <li> Пароль: <c:out value="${user.password}"/></li>
             <li> Возраст: <c:out value="${user.age}"/></li>
             <li> Права: <c:out value="${user.role}"/></li>
-            <form method="post" action="<c:url value="/delete"/>">
+            <form method="post" action="<c:url value="/admin/delete"/>">
                 <input type="number" hidden name="id" value="${user.id}"/>
                 <input type="submit" name="delete" value="Удалить"/>
             </form>
-            <form method="get" action="<c:url value="/update"/>">
+            <form method="get" action="<c:url value="/admin/update"/>">
                 <input type="number" hidden name="id" value="${user.id}"/>
                 <input type="submit" name="update" value="Редактировать"/>
             </form>

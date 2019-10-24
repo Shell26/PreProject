@@ -1,5 +1,6 @@
 package servlet.filter;
 
+import model.User;
 import service.UserService;
 
 import javax.servlet.*;
@@ -20,31 +21,27 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse resp = (HttpServletResponse) response;
-        final HttpSession session = req.getSession();
+        final HttpSession session = req.getSession(false);
 
-        final String login1 = (String) session.getAttribute("login");
-        final String password1 = (String) session.getAttribute("password");
-
-        if(login1 == null && password1 == null){
+        if(session != null){
+            //читаю из формы
             final String login = req.getParameter("authLogin");
             final String password = req.getParameter("authPass");
-            req.getSession().setAttribute("password", password);
-            req.getSession().setAttribute("login", login);
-        }else if(!UserService.getInstance().userIsExist(login1, password1)){
-            final String login = req.getParameter("authLogin");
-            final String password = req.getParameter("authPass");
-            req.getSession().setAttribute("password", password);
-            req.getSession().setAttribute("login", login);
+            if (session.getAttribute("login") == null || session.getAttribute("password") ==null){
+                //записываю в сессию
+                session.setAttribute("password", password);
+                session.setAttribute("login", login);
+            }
         }
 
-        final String login2 = (String) session.getAttribute("login");
-        final String password2 = (String) session.getAttribute("password");
-
-        if (UserService.getInstance().userIsExist(login2, password2)){
-            filterChain.doFilter(request, response);
+        if(session == null || session.getAttribute("login") == null || session.getAttribute("password") ==null) {
+            request.getServletContext().getRequestDispatcher("/").forward(request, response);
+            //кидает опять на этот же фильтр
+//            resp.sendRedirect(req.getContextPath() + "/");
         }else{
-            req.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(req, resp);
+            filterChain.doFilter(request, response);
         }
+
     }
 
     @Override

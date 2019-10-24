@@ -10,7 +10,7 @@
     Текущий Возраст: <c:out value="${requestScope.user.age}"/><br/>
     <br/>
 <p>Обязательно нужно редактировать все поля</p><br/>
-    <form method="post" action="<c:url value='/update'/>">
+    <form method="post" action="<c:url value='/admin/update'/>">
         <label>Новое имя: <input type="text" name="name2" placeholder="<c:out value="${requestScope.user.name}"/>" /></label><br>
         <label>Новый пароль: <input type="password" name="password2" placeholder="<c:out value="${requestScope.user.password}"/>" /></label><br>
         <label>Новый возраст: <input type="number" name="age2" placeholder="<c:out value="${requestScope.user.age}"/>" /></label><br>

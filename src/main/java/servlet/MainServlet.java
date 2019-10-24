@@ -12,12 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/main")
+@WebServlet("/admin/main")
 public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        final HttpSession session = req.getSession();
+        final HttpSession session = req.getSession(false);
         final String login = (String) session.getAttribute("login");
         final String password = (String) session.getAttribute("password");
 
@@ -44,8 +44,6 @@ public class MainServlet extends HttpServlet {
         User user = new User(age, name, password, "user");
 
         UserService.getInstance().addUser(user);
-
-//        System.out.println(UserService.getInstance().isAdmin(name, secondName));
 
         doGet(req, resp);
     }
